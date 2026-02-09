@@ -41,7 +41,7 @@ export default function RevenueChart() {
               border: '1px solid #e5e7eb',
               borderRadius: '8px',
             }}
-            formatter={(value) => `$${value.toLocaleString()}`}
+            formatter={(value) => `$${Number(value).toLocaleString()}`}
           />
           <Legend />
           <Line
