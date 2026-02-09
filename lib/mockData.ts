@@ -51,10 +51,52 @@ export const mockData = {
   ],
 };
 
+// Filter-based data variations
+const filterVariations = {
+  '7days': {
+    totalRevenue: 12450,
+    totalUsers: 320,
+    totalOrders: 78,
+    conversionRate: 4.8,
+  },
+  '30days': {
+    totalRevenue: 54230,
+    totalUsers: 1245,
+    totalOrders: 342,
+    conversionRate: 4.3,
+  },
+  '12months': {
+    totalRevenue: 485230,
+    totalUsers: 8542,
+    totalOrders: 2891,
+    conversionRate: 3.9,
+  },
+};
+
+const userTypeVariations = {
+  all: { multiplier: 1, userType: 'All Users' },
+  free: { multiplier: 0.48, userType: 'Free Users' },
+  premium: { multiplier: 0.36, userType: 'Premium Users' },
+  enterprise: { multiplier: 0.16, userType: 'Enterprise Users' },
+};
+
 // Simulate API calls with delay
-export async function fetchStats() {
+export async function fetchStats(filters?: { dateRange: string; userType: string }) {
   await new Promise((resolve) => setTimeout(resolve, 500));
-  return mockData.stats;
+  
+  if (!filters) {
+    return mockData.stats;
+  }
+
+  const dateData = filterVariations[filters.dateRange as keyof typeof filterVariations] || mockData.stats;
+  const userMultiplier = userTypeVariations[filters.userType as keyof typeof userTypeVariations]?.multiplier || 1;
+
+  return {
+    totalRevenue: Math.round(dateData.totalRevenue * userMultiplier),
+    totalUsers: Math.round(dateData.totalUsers * userMultiplier),
+    totalOrders: Math.round(dateData.totalOrders * userMultiplier),
+    conversionRate: Number((dateData.conversionRate * (1 + (userMultiplier - 1) * 0.2)).toFixed(1)),
+  };
 }
 
 export async function fetchRevenue() {

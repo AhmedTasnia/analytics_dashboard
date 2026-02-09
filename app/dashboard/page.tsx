@@ -32,7 +32,7 @@ export default function Dashboard() {
     const loadStats = async () => {
       try {
         setIsLoading(true);
-        const data = await fetchStats();
+        const data = await fetchStats(filters);
         setStats(data);
       } catch (error) {
         console.error('Error loading stats:', error);

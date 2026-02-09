@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, BarChart3, Users, TrendingUp, Settings } from 'lucide-react';
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsMounted(true);
@@ -46,11 +48,16 @@ export default function Sidebar() {
           <nav className="space-y-2">
             {navItems.map((item) => {
               const Icon = item.icon;
+              const isActive = pathname === item.href;
               return (
                 <Link
                   key={item.id}
                   href={item.href}
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${
+                    isActive
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                  }`}
                 >
                   <Icon className="w-5 h-5" />
                   <span>{item.label}</span>
