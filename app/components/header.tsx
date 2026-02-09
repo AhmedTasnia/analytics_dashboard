@@ -18,8 +18,8 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 right-0 left-0 lg:left-64 mb-10 bg-white shadow-md z-40">
-      <div className="flex items-center justify-between px-6 py-2">
+    <header className="sticky top-0 right-0 left-0 bg-white shadow-md z-30 h-16">
+      <div className="flex items-center justify-between px-6 py-4 h-full">
         <div className="hidden lg:block">
           <h2 className="text-xl font-semibold text-gray-800">Dashboard</h2>
         </div>
